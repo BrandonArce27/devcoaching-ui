@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
+
 import { useRouter } from "next/router";
+
 import { ChakraProvider, Button } from "@chakra-ui/react";
+
 import { useQuery, gql } from "@apollo/client";
+
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   createHttpLink,
 } from "@apollo/client";
+
 import { setContext } from "@apollo/client/link/context";
+
+import Layout from "../../components/molecules/layout";
 
 const GET_USER = gql`
   query user {
@@ -55,13 +62,16 @@ interface User {
 
 export default function Home() {
   const router = useRouter();
+
   const { loading, error, data } = useQuery(GET_USER);
+
   const [user, setUser] = useState<User | null>(null);
+
   useEffect(() => {
     const token = localStorage.getItem("authToken");
 
     if (!token) {
-      router.push("/login"); // o '/login' si cambias el nombre del archivo a 'login.tsx'
+      router.push("/login");
     } else if (data) {
       setUser(data.user);
     }
@@ -75,22 +85,17 @@ export default function Home() {
   return (
     <ApolloProvider client={client}>
       <ChakraProvider>
-        <>
+        <Layout>
           <main>
-            <h1>My next app</h1>
-            <Button variant="outline" colorScheme="red">
-              Hola boton
-            </Button>
             {user && (
               <div>
                 <h2>
-                  {user.firstName} {user.lastName}
+                  Hola: {user.firstName} {user.lastName}
                 </h2>
-                <p>{user.email}</p>
               </div>
             )}
           </main>
-        </>
+        </Layout>
       </ChakraProvider>
     </ApolloProvider>
   );
