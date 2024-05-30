@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 
 import type { AppProps } from "next/app";
 
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
 import {
   ApolloClient,
@@ -14,6 +14,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 
 export default function App({ Component, pageProps }: AppProps) {
+  
   const httpLink = createHttpLink({
     uri: "http://localhost:8080/graphql",
   });
@@ -33,8 +34,15 @@ export default function App({ Component, pageProps }: AppProps) {
     cache: new InMemoryCache(),
   });
 
+  const theme = extendTheme({
+    config: {
+      initialColorMode: "dark",
+      useSystemColorMode: false,
+    },
+  });
+
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <ApolloProvider client={client}>
         <Component {...pageProps} />
       </ApolloProvider>
