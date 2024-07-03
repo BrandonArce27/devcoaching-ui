@@ -61,6 +61,11 @@ export type KnowledgeWhereUniqueInput = {
   uuid?: InputMaybe<Scalars['Float']>;
 };
 
+export enum Language {
+  English = 'ENGLISH',
+  Spanish = 'SPANISH'
+}
+
 export type LoginOutput = {
   __typename?: 'LoginOutput';
   access_token: Scalars['String'];
@@ -213,6 +218,7 @@ export type User = {
   email?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Float']>;
+  language?: Maybe<Language>;
   lastName?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   uuid?: Maybe<Scalars['String']>;
