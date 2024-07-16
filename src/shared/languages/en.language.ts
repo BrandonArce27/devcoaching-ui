@@ -2,7 +2,7 @@ import { Dictionary } from "@/shared/types";
 
 const EnglishDictionary: Dictionary = {
   login: {
-    title: "Log into Quizmaster!",
+    title: "Log into DevLive!",
     form: {
       submit: "Log in",
       email: "Email",
@@ -10,7 +10,13 @@ const EnglishDictionary: Dictionary = {
     },
   },
   home: {
-    title: "QuizMaster",
+    title: "DevLive",
+    navbar: {
+      home: "Home",
+      reward: "Reward",
+      profile: "Profile",
+      logout: "Logout",
+    },
   },
   form: {
     error: {

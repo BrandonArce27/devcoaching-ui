@@ -39,6 +39,12 @@ export interface Dictionary {
   };
   home: {
     title: string;
+    navbar:{
+      home: string;
+      reward: string;
+      profile: string
+      logout: string;
+    }
   };
   login: {
     title: string;

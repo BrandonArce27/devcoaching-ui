@@ -11,6 +11,12 @@ const SpanishDictionary: Dictionary = {
   },
   home: {
     title: "Devlive",
+    navbar: {
+      home: "Home",
+      reward: "Recompensas",
+      profile: "Perfil",
+      logout: "Salir",
+    },
   },
   form: {
     error: {

@@ -4,6 +4,8 @@ import { LanguageOption } from "@/shared/types";
 
 export * from "./global-state.constant";
 
+export * from "./routes.constants";
+
 interface ConstantsValues {
   PARAM: string;
   DEFAULT_LANGUAGE: Language;
