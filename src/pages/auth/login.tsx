@@ -1,21 +1,20 @@
+import React from "react";
+
+import { Box, Flex, useColorMode } from "@chakra-ui/react"; //TODO: Simplify all this in atomic design
+
+import Heading from "@/shared/components/atoms/heading/Heading";
+
+import Button from "@/shared/components/atoms/button/Button";
+
+import FormControlWithLabel from "@/shared/components/molecules/form/FormControlWithLabel";
+
 import { useMutation } from "@apollo/client";
 
 import gql from "graphql-tag";
 
-import React from "react";
+import useNavigation from "@/shared/hooks/use-navigation.hook";
 
-import { useRouter } from "next/router";
-
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Flex,
-  useColorMode,
-  Heading,
-} from "@chakra-ui/react";
+import { GlobalRoute, AppScreen } from "@/shared/constants/routes.constants";
 
 import { useTranslate } from "@/shared/hooks";
 
@@ -45,15 +44,13 @@ type LoginData = {
 
 function Login() {
   const { colorMode } = useColorMode();
-  const { t } = useTranslate()
-
-  console.log(t('login.form.email'))
+  const { t } = useTranslate();
 
   const isDark = colorMode === "dark";
 
   const [login] = useMutation<LoginData>(LOGIN_MUTATION);
 
-  const router = useRouter();
+  const navigation = useNavigation();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -62,7 +59,7 @@ function Login() {
       email: { value: string };
       password: { value: string };
     };
-    
+
     const email = target.email.value;
     const password = target.password.value;
 
@@ -71,10 +68,14 @@ function Login() {
 
     if (token) {
       localStorage.setItem("authToken", token);
-      router.push("/");
+      navigation.push({
+        route: GlobalRoute.APP,
+        screen: AppScreen.ROOT,
+      });
     }
   };
 
+  //TODO: Use Formik the proper way
   return (
     <>
       <Heading
@@ -85,15 +86,9 @@ function Login() {
         left={5}
         fontFamily="Arial, sans-serif"
       >
-        <Box as="span" color="white">
-          Dev
-        </Box>
-        <Box as="span" color="#38B2AC">
-          L
-        </Box>
-        <Box as="span" color="white">
-          ive
-        </Box>
+        <span style={{ color: "white" }}>Dev</span>
+        <span style={{ color: "#38B2AC" }}>L</span>
+        <span style={{ color: "white" }}>ive</span>
       </Heading>
       <Flex minHeight="100vh" alignItems="center" justifyContent="center">
         <Box
@@ -103,23 +98,29 @@ function Login() {
           shadow="md"
           borderWidth={isDark ? 0 : 1}
         >
-          <FormControl id="email" isRequired>
-            <FormLabel>Email</FormLabel>
-            <Input name="email" type="email" placeholder="Email" />
-          </FormControl>
-          <FormControl id="password" isRequired mt={6}>
-            <FormLabel>Password</FormLabel>
-            <Input name="password" type="password" placeholder="Password" />
-          </FormControl>
+          <FormControlWithLabel
+            id="email"
+            label={t("login.form.email")}
+            name="email"
+            type="email"
+            placeholder={t("login.form.email")}
+          />
+          <FormControlWithLabel
+            id="password"
+            label={t("login.form.password")}
+            name="password"
+            type="password"
+            placeholder={t("login.form.password")}
+            mt={6}
+          />
           <Button
             colorScheme="teal"
             variant="outline"
             type="submit"
             width="full"
             mt={4}
-          >
-            Log in
-          </Button>
+            text="login.form.submit"
+          />
         </Box>
       </Flex>
     </>
