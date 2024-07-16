@@ -1,5 +1,3 @@
-// import { ExtractTypename } from ".";
-
 import { Language } from "../generated";
 
 export interface AuthCredentials {
