@@ -1,17 +1,22 @@
-import { Button, Flex, Box, Heading } from "@chakra-ui/react";
+import React from "react";
 
-import Link from "next/link";
+import { Flex, Box } from "@chakra-ui/react"; //TODO: Simplify all this in atomic design
 
 import { useRouter } from "next/router";
 
 import { destroyCookie } from "nookies";
 
-interface NavbarProps {
-  image: string;
-  links: {}[];
-}
+import useNavigation from "@/shared/hooks/use-navigation.hook";
+
+import { GlobalRoute, AppScreen } from "@/shared/constants/routes.constants";
+
+import Heading from "@/shared/components/atoms/heading/Heading";
+
+import Button from "@/shared/components/atoms/button/Button";
 
 export function Navbar() {
+  const { push } = useNavigation();
+
   const router = useRouter();
 
   const logout = () => {
@@ -40,39 +45,39 @@ export function Navbar() {
             ive
           </Box>
         </Heading>
-        <Link href="/" passHref>
-          <Button
-            as="a"
-            colorScheme="teal"
-            variant="outline"
-            _hover={{ bg: "#2C7A7B", color: "black" }}
-          >
-            Home
-          </Button>
-        </Link>
-        <Link href="/reward" passHref>
-          <Button
-            as="a"
-            colorScheme="teal"
-            variant="outline"
-            _hover={{ bg: "#2C7A7B", color: "black" }}
-          >
-            Rewards
-          </Button>
-        </Link>
-        <Link href="/profile" passHref>
-          <Button
-            as="a"
-            colorScheme="teal"
-            variant="outline"
-            _hover={{ bg: "#2C7A7B", color: "black" }}
-          >
-            Profile
-          </Button>
-        </Link>
-        <Button onClick={logout} colorScheme="red" variant="outline">
-          Logout
-        </Button>
+        <Button
+          onClick={() =>
+            push({ route: GlobalRoute.APP, screen: AppScreen.ROOT })
+          }
+          colorScheme="teal"
+          variant="outline"
+          hover={{ bg: "#2C7A7B", color: "black" }}
+          text="home.navbar.profile"
+        />
+        <Button
+          onClick={() =>
+            push({ route: GlobalRoute.APP, screen: AppScreen.REWARD })
+          }
+          colorScheme="teal"
+          variant="outline"
+          hover={{ bg: "#2C7A7B", color: "black" }}
+          text="home.navbar.reward"
+        />
+        <Button
+          onClick={() =>
+            push({ route: GlobalRoute.APP, screen: AppScreen.PROFILE })
+          }
+          colorScheme="teal"
+          variant="outline"
+          hover={{ bg: "#2C7A7B", color: "black" }}
+          text="home.navbar.profile"
+        />
+        <Button
+          onClick={logout}
+          colorScheme="red"
+          variant="outline"
+          text="home.navbar.logout"
+        />
       </Flex>
     </>
   );
